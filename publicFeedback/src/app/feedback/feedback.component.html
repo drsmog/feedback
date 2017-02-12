@@ -1,0 +1,14 @@
+<p>
+  feedback works!
+</p>
+<div>
+  <label>Title</label>
+  <input type="text" #feedbackTitle>
+</div>
+<div>
+  <label>Description</label>
+  <input type="text" #feedbackDescription>
+</div>
+<button type="button" name="button" (click)='submitFeedback(feedbackTitle.value,feedbackDescription.value)'>
+  Submit New Feedback
+</button>

@@ -1,0 +1,25 @@
+{
+  "name": "feedback",
+  "version": "1.0.0",
+  "description": "feedback system",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drsmog/feedback.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drsmog/feedback/issues"
+  },
+  "homepage": "https://github.com/drsmog/feedback#readme",
+  "dependencies": {
+    "body-parser": "1.16.1",
+    "express": "4.14.1",
+    "tfs_api_wrapper": "1.0.0"
+  }
+}
