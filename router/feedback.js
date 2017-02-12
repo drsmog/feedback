@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const path = require('path');
 
 
 var tfs = require('tfs_api_wrapper')({
@@ -19,7 +20,7 @@ var storage = multer.diskStorage({
     },
     filename: function(request, file, callback) {
 
-        callback(null, file.originalname + '-' + request.params.feedbackId);
+        callback(null, request.params.feedbackId + '-' + file.originalname);
     }
 });
 var upload = multer({
@@ -33,14 +34,34 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/:feedbackId/files', upload.any(), function(req, res, next) {
-   console.log('complate!');
-    res.send();
+
+    if (req.files.length === 0) return res.send();
+
+    let file = req.files[0];
+
+    let fullFileAddress = path.join(__dirname, '../' + file.path);
+    let workItemId = req.params.feedbackId;
+
+    tfs.attacheFileOnWorkItem({
+            fileName: file.filename,
+            fullFileAddress: fullFileAddress,
+            wrokItemId: workItemId
+        })
+        .then(function(result) {
+            res.send();
+            console.log(result);
+        })
+        .catch(function(err) {
+            console.error(err.message);
+            res.send();
+        });
+
+
 });
 
 router.post('/', upload.any(), function(req, res, next) {
+
     let newFeedback = req.body;
-
-
 
     tfs.createWorkItem({
             projectName: 'testproject',
