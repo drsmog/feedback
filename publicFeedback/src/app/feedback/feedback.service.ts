@@ -24,7 +24,10 @@ export class FeedbackService {
     return this.http.post(this.url,
       JSON.stringify(feedback),
       { headers: this.headers }).toPromise()
-      .then(res => res.json().data);
+      .then(response => {
+        return response.json();
+      });
+
   }
 
   constructor(private http: Http) { }

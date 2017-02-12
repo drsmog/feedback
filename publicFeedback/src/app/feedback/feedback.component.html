@@ -1,14 +1,94 @@
-<p>
-  feedback works!
-</p>
-<div>
-  <label>Title</label>
-  <input type="text" #feedbackTitle>
+<div class="container container_feedback">
+  <form>
+
+    <label>მოკლე აღწერა : </label>
+    <div class="input-group">
+      <input type="text" class="form-control" #feedbackTitle maxlength="100" required="true" placeholder="შეტყობინების მოკლე აღწერა" oninvalid="this.setCustomValidity('გთხოვთ შეავსოთ მითითებული ველი')" onchange="this.setCustomValidity('')">
+    </div>
+
+
+    <label>ვრცლად : </label>
+    <div class="input-group">
+      <textarea class="form-control" rows="5" #feedbackDescription maxlength="1500" required="true" placeholder="შეტყობინების დეტალური აღწერა" oninvalid="this.setCustomValidity('გთხოვთ შეავსოთ მითითებული ველი')" onchange="this.setCustomValidity('')"></textarea>
+    </div>
+
+    <div class="feedback-actions">
+      <button class="btn btn-primary" type="submit" name="button" (click)='submitFeedback(feedbackTitle.value,feedbackDescription.value)'>
+        გაგზავნა
+      </button>
+    </div>
+
+  </form>
 </div>
-<div>
-  <label>Description</label>
-  <input type="text" #feedbackDescription>
+
+
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-3">
+
+            <h3>ფაილის მიმაგრება</h3>
+
+            <input type="file" ng2FileSelect [uploader]="uploader" multiple  /><br/>
+
+        </div>
+
+        <div class="col-md-9" style="margin-bottom: 40px">
+
+            <p>ფაილების რაოდენობა: {{ uploader?.queue?.length }}</p>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">ფაილი</th>
+                    <th>სტატუსი</th>
+                    <th>მოქმედება</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                    <td *ngIf="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                    <td nowrap>
+
+                        <button type="button" class="btn btn-danger btn-xs"
+                                (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> წაშლა
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <div>
+
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> სიის გაცარიელება
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-<button type="button" name="button" (click)='submitFeedback(feedbackTitle.value,feedbackDescription.value)'>
-  Submit New Feedback
-</button>

@@ -1,0 +1,16 @@
+textarea {
+  resize: none;
+}
+
+.container_feedback{
+  margin: 100px auto;
+  width: 80%;
+}
+
+form .input-group {
+  width: 100%;
+}
+form .feedback-actions {
+  text-align: center;
+  margin: 10px auto;
+}
